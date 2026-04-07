@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time is Money - Schedule</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f1115;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-gold: #c3a343;
+            --glass-bg: rgba(25, 27, 33, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: linear-gradient(to bottom, rgba(15, 17, 21, 0.6), var(--bg-color) 80%), url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 5rem;
+        }
+
+        /* Hero / Main Title */
+        .header-title {
+            margin-top: 6rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 10px;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .header-title h1 strong {
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* 3D Grid Container */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            width: 90%;
+            perspective: 1000px;
+        }
+
+        /* Glassmorphism Card Styling */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .card-content {
+            transform: translateZ(50px);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .golden-rule {
+            border: 1px solid var(--accent-gold);
+            background: rgba(195, 163, 67, 0.05);
+            box-shadow: 0 0 40px rgba(195, 163, 67, 0.1);
+        }
+
+        .golden-rule h2 {
+            color: var(--accent-gold);
+            border-bottom-color: rgba(195, 163, 67, 0.3);
+        }
+
+        /* Task Details */
+        .time-block {
+            margin-bottom: 1.8rem;
+        }
+
+        .time-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .time {
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .task {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .sub-task {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 5px 0 0 0;
+            padding-left: 10px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            line-height: 1.5;
+        }
+
+        .insight-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-style: italic;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .golden-insight {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            font-weight: 300;
+            padding: 20px;
+            background: rgba(195, 163, 67, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(195, 163, 67, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .checklist li::before {
+            content: "✓";
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .header-title h1 { font-size: 2.5rem; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1><strong>TIME IS MONEY</strong></h1>
+    </div>
+
+    <div class="grid-container">
+        
+        <div class="card" data-tilt data-tilt-glare data-tilt-max-glare="0.1">
+            <div class="card-content">
+                <h2>Morning <span>🌅</span></h2>
+                
+                <div class="time-block">
+                    <div class="time-header"><span class="time">6:30 – 7:00</span> <span class="task">Wake Up & Move</span></div>
+                    <div class="sub-task">Boost dopamine + alertness</div>
+                </div>
+
+                <div class="time-block">
+                    <div class="time-header"><span class="time">7:00 – 8:30</span> <span class="task">Deep Skill Building I</span></div>
+                    <div class="sub-task">Learn new concepts (hard stuff)<br>Strictly NO distractions</div>
+                </div>
+
+                <div class="time-block">
+                    <div class="time-header"><span class="time">8:30 – 9:00</span> <span class="task" style="color:var(--text-muted)">Break + Breakfast</span></div>
+                </div>
+
+                <div class="time-block">
+                    <div class="time-header"><span class="time">9:00 – 10:30</span> <span class="task">Deep Skill Building II</span></div>
+                    <div class="sub-task">Practice what you learned<br>Hands-on work (coding, building, etc.)</div>
+                </div>
+
+                <div class="insight-box">
+                    Replaces your "morning until 10" with a structured, scientifically optimal routine.
+                </div>
+            </div>
+        </div>
+
+        <div class="card" data-tilt data-tilt-glare data-tilt-max-glare="0.1">
+            <div class="card-content">
+                <h2>Midday <span>🧠</span></h2>
+                
+                <div class="time-block">
+                    <div class="time-header"><span class="time">10:30 – 12:00</span> <span class="task">Project Work</span></div>
+                    <div class="sub-task">Build something using what you learned</div>
+                    <div class="sub-task">Focus: "How does it actually work?"</div>
+                    <div class="insight-box" style="margin-top: 10px; margin-bottom: 20px;">
+                        This is where real learning happens. Keep it up.
+                    </div>
+                </div>
+
+                <div class="time-block">
+                    <div class="time-header"><span class="time">12:00 – 1:00</span> <span class="task">AI + Reflection</span></div>
+                    <div class="sub-task">Test yourself first, then verify with AI</div>
+                    <div class="sub-task">Ask questions & challenge answers</div>
+                    <div class="sub-task">Fill knowledge gaps</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" data-tilt data-tilt-glare data-tilt-max-glare="0.1">
+            <div class="card-content">
+                <h2>Afternoon <span>🗣️</span></h2>
+                
+                <div class="time-block">
+                    <div class="time-header"><span class="time">1:00 – 2:00</span> <span class="task">Rest & Recover</span></div>
+                    <div class="sub-task" style="color: var(--accent-gold)">Critical for memory consolidation. Do not skip.</div>
+                </div>
+
+                <div class="time-block" style="margin-top: 2rem;">
+                    <div class="time-header"><span class="time">2:00 – 3:00</span> <span class="task">Communication Skills</span></div>
+                    <div class="sub-task">Speak English (record yourself)</div>
+                    <div class="sub-task">Learn vocabulary in context</div>
+                    <div class="sub-task">Practice real conversations</div>
+                </div>
+
+                <div class="time-block" style="margin-top: 2rem;">
+                    <div class="time-header"><span class="time">3:30 – 4:30</span> <span class="task">Active Recall</span></div>
+                    <div class="sub-task">Do something you like, but keep it useful to your goals.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card golden-rule" data-tilt data-tilt-glare data-tilt-max-glare="0.15">
+            <div class="card-content">
+                <h2>The Golden Rule <span>⚡</span></h2>
+                
+                <div class="golden-insight">
+                    "Don't just spend time — measure output."
+                </div>
+                
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">Ask yourself at the end of every day:</p>
+                
+                <ul class="checklist">
+                    <li>What did I build today?</li>
+                    <li>What concepts can I explain clearly?</li>
+                    <li>What specific things did I struggle with?</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <script>
+        VanillaTilt.init(document.querySelectorAll(".card"), {
+            max: 5,               // Slightly lower tilt for elegance
+            speed: 400,           
+            glare: true,          
+            "max-glare": 0.1,    // Subtle glare for the glass effect
+            scale: 1.02           
+        });
+    </script>
+</body>
+</html>
